@@ -5,23 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Каршеринг - Наши автомобили</title>
     
-    <!-- Yandex.Metrika counter -->
-    <script type="text/javascript">
-        (function(m,e,t,r,i,k,a){m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)};
-        m[i].l=1*new Date();
-        for (var j = 0; j < document.scripts.length; j++) {if (document.scripts[j].src === r) { return; }}
-        k=e.createElement(t),a=e.getElementsByTagName(t)[0],k.async=1,k.src=r,a.parentNode.insertBefore(k,a)})
-        (window, document, "script", "https://mc.yandex.ru/metrika/tag.js", "ym");
-
-        ym(98911244, "init", {
-            clickmap:true,
-            trackLinks:true,
-            accurateTrackBounce:true
-        });
-    </script>
-    <noscript><div><img src="https://mc.yandex.ru/watch/98911244" style="position:absolute; left:-9999px;" alt="" /></div></noscript>
-    <!-- /Yandex.Metrika counter -->
-
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -34,6 +17,11 @@
             color: white;
             padding: 15px;
             text-align: center;
+        }
+        .language-switcher {
+            position: absolute;
+            top: 15px;
+            right: 15px;
         }
         .container {
             display: flex;
@@ -89,46 +77,95 @@
             height: 450px;
         }
     </style>
+
+    <script>
+        const translations = {
+            ru: {
+                welcome: "Добро пожаловать в наш каршеринг",
+                selectCar: "Выберите автомобиль для аренды",
+                cars: [
+                    { name: "Hyundai Solaris", description: "Экономичный и надежный городской автомобиль", price: "Цена: 1500 ₽/день" },
+                    { name: "Volkswagen Polo", description: "Современный и стильный седан", price: "Цена: 1800 ₽/день" },
+                    { name: "Toyota Camry", description: "Удобный и роскошный седан для долгих поездок", price: "Цена: 2500 ₽/день" }
+                ],
+                locationTitle: "Где мы находимся",
+                footer: "Все права защищены."
+            },
+            en: {
+                welcome: "Welcome to our car sharing service",
+                selectCar: "Choose a car to rent",
+                cars: [
+                    { name: "Hyundai Solaris", description: "Economical and reliable city car", price: "Price: 1500 ₽/day" },
+                    { name: "Volkswagen Polo", description: "Modern and stylish sedan", price: "Price: 1800 ₽/day" },
+                    { name: "Toyota Camry", description: "Comfortable and luxurious sedan for long trips", price: "Price: 2500 ₽/day" }
+                ],
+                locationTitle: "Where we are located",
+                footer: "All rights reserved."
+            }
+        };
+
+        let currentLanguage = "ru";
+
+        function switchLanguage(lang) {
+            currentLanguage = lang;
+            const content = translations[lang];
+
+            document.getElementById("welcome").textContent = content.welcome;
+            document.getElementById("selectCar").textContent = content.selectCar;
+
+            const carCards = document.querySelectorAll(".car-card");
+            content.cars.forEach((car, index) => {
+                carCards[index].querySelector("h2").textContent = car.name;
+                carCards[index].querySelector("p.description").textContent = car.description;
+                carCards[index].querySelector("p.price").textContent = car.price;
+            });
+
+            document.getElementById("locationTitle").textContent = content.locationTitle;
+            document.getElementById("footerText").textContent = content.footer;
+        }
+    </script>
 </head>
-<body>
+<body onload="switchLanguage('ru')">
 
 <header>
-    <h1>Добро пожаловать в наш каршеринг</h1>
-    <p>Выберите автомобиль для аренды</p>
+    <h1 id="welcome"></h1>
+    <p id="selectCar"></p>
+    <div class="language-switcher">
+        <button onclick="switchLanguage('ru')">Русский</button>
+        <button onclick="switchLanguage('en')">English</button>
+    </div>
 </header>
 
 <div class="container">
     <div class="car-card">
-        <img src="images/carlineup_camry_customize_top_trd1_pc.jpg" alt="Автомобиль Hyundai Solaris">
-        <h2>Hyundai Solaris</h2>
-        <p>Экономичный и надежный городской автомобиль</p>
-        <p class="price">Цена: 1500 ₽/день</p>
+        <img src="images/carlineup_camry_customize_top_trd1_pc.jpg" alt="Hyundai Solaris">
+        <h2></h2>
+        <p class="description"></p>
+        <p class="price"></p>
     </div>
 
     <div class="car-card">
-        <img src="images/bmvM5.jpg" alt="Автомобиль Volkswagen Polo">
-        <h2>Volkswagen Polo</h2>
-        <p>Современный и стильный седан</p>
-        <p class="price">Цена: 1800 ₽/день</p>
+        <img src="images/bmvM5.jpg" alt="Volkswagen Polo">
+        <h2></h2>
+        <p class="description"></p>
+        <p class="price"></p>
     </div>
 
     <div class="car-card">
-        <img src="images/6404176429.jpg" alt="Автомобиль Toyota Camry">
-        <h2>Toyota Camry</h2>
-        <p>Удобный и роскошный седан для долгих поездок</p>
-        <p class="price">Цена: 2500 ₽/день</p>
+        <img src="images/6404176429.jpg" alt="Toyota Camry">
+        <h2></h2>
+        <p class="description"></p>
+        <p class="price"></p>
     </div>
 </div>
 
-<!-- Добавленная секция "Где мы находимся" с картой -->
 <section class="map-section" id="map">
-    <h2 class="section-title">Где мы находимся</h2>
-    <!-- Встраивание карты Google -->
+    <h2 id="locationTitle"></h2>
     <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2244.998576300939!2d37.61729931569202!3d55.75582600405232!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x414ab1bb9ac0afab%3A0x67a835ccbfdf78e6!2sКрасная%20площадь%2C%20Москва!5e0!3m2!1sru!2sru!4v1634635938290!5m2!1sru!2sru" allowfullscreen="" loading="lazy"></iframe>
 </section>
 
 <footer>
-    <p>&copy; 2024 Каршеринг. Все права защищены.</p>
+    <p id="footerText"></p>
 </footer>
 
 </body>
